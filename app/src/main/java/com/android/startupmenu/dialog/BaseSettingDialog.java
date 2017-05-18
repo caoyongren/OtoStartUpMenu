@@ -2,7 +2,6 @@ package com.android.startupmenu.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;

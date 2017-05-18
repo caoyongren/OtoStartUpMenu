@@ -1,13 +1,10 @@
 package com.android.startupmenu.util;
 
-import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.database.Cursor;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 /*
 * Created by Cao Yongren on 15-5-2017

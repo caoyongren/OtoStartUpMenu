@@ -1,36 +1,26 @@
 package com.android.startupmenu.adapter;
 
-import java.util.List;
-import java.util.Map;
-
-import com.android.startupmenu.R;
-import android.content.ContentValues;
-import com.android.startupmenu.util.AppInfo;
-import android.database.Cursor;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.MotionEvent;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.database.sqlite.SQLiteDatabase;
-import com.android.startupmenu.dialog.StartMenuDialog;
+
+import com.android.startupmenu.R;
 import com.android.startupmenu.StartupMenuActivity;
+import com.android.startupmenu.dialog.StartMenuDialog;
+import com.android.startupmenu.util.AppInfo;
 import com.android.startupmenu.util.Constants;
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
 import com.android.startupmenu.util.StartupMenuUtil;
 
-import android.os.UserHandle;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.content.pm.ApplicationInfo;
-import com.android.startupmenu.dialog.StartMenuDialog;
+import java.util.List;
+import java.util.Map;
 
 public class StartupMenuAdapter extends BaseAdapter {
     public static final int START_MENU_RIGHT_MOUSE_UI_NUMBER = 57;

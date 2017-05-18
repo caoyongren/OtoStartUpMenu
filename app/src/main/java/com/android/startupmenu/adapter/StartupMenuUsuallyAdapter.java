@@ -1,14 +1,7 @@
 package com.android.startupmenu.adapter;
 
-import com.android.startupmenu.R;
-import java.util.List;
-import com.android.startupmenu.util.AppInfo;
-import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
-import com.android.startupmenu.StartupMenuActivity;
 import android.content.ContentValues;
 import android.content.Context;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +12,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.SharedPreferences;
+
+import com.android.startupmenu.R;
+import com.android.startupmenu.StartupMenuActivity;
+import com.android.startupmenu.util.AppInfo;
+import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
+import com.android.startupmenu.util.TableIndexDefine;
+
+import java.util.List;
 
 public class StartupMenuUsuallyAdapter extends BaseAdapter {
     public static final int START_MENU_RIGHT_MOUSE_UI_NUMBER = 57;

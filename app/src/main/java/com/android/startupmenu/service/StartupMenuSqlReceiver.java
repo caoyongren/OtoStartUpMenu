@@ -1,34 +1,28 @@
 package com.android.startupmenu.service;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
-import com.android.startupmenu.util.Constants;
-import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
-import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
-import android.content.ContentValues;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+
+import com.android.startupmenu.util.Constants;
+import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
+import com.android.startupmenu.util.TableIndexDefine;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
 import static com.android.startupmenu.StartupMenuActivity.isEnglish;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.widget.Toast;
-import android.content.Intent;
 
 public class StartupMenuSqlReceiver extends BroadcastReceiver {
     private StartupMenuSqliteOpenHelper mMsoh;

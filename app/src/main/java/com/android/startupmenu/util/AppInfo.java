@@ -1,15 +1,16 @@
 package com.android.startupmenu.util;
 
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.android.startupmenu.R;
+
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AppInfo implements Parcelable {
 

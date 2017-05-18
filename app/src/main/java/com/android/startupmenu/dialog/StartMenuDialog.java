@@ -1,47 +1,32 @@
 package com.android.startupmenu.dialog;
 
-import com.android.startupmenu.R;
-import android.graphics.Color;
-import android.R.layout;
-import android.os.Bundle;
-import android.content.Context;
-import android.text.TextWatcher;
-import android.text.Editable;
-import android.text.TextUtils;
 import android.app.Dialog;
-import android.widget.Toast;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
-import android.view.Window;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.View.OnGenericMotionListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.content.ContentValues;
-import android.database.Cursor;
-import com.android.startupmenu.StartupMenuActivity;
-import android.database.sqlite.SQLiteDatabase;
 
+import com.android.startupmenu.R;
+import com.android.startupmenu.StartupMenuActivity;
+import com.android.startupmenu.adapter.StartupMenuAdapter;
 import com.android.startupmenu.util.Constants;
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
 import com.android.startupmenu.util.StartupMenuUtil;
-
-import android.net.Uri;
-import android.provider.Settings;
-import android.util.Log;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import com.android.startupmenu.adapter.StartupMenuAdapter;
-import android.os.Handler;
-import android.os.Message;
-import android.content.ContentResolver;
 
 public class StartMenuDialog extends Dialog implements OnTouchListener {
     public static int STARTMENU_WIDTH = 55;
