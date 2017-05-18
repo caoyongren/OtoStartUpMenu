@@ -222,7 +222,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
 
         class mThread extends Thread {
             public void run(){
-                mIsClick = mSharedPreference.getBoolean("isClick", false);
+                mIsClick = mSharedPreference.getBoolean("isClickApp", false);
                 mType = mSharedPreference.getString("type", "sortName");
                 mOrder = mSharedPreference.getInt("order", 0);
                 if (mIsClick) {
@@ -246,15 +246,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             switch(what) {
                 case MotionEvent.ACTION_HOVER_ENTER:
                     if (!mIsClick) {
-                        /*if (isSql == 0) {
-                           Intent intent = new Intent();
-                           intent.setAction(Intent.ACTION_STARTMENU_SEND_SQLITE_INFO);
-                           sendBroadcast(intent);
-                           SharedPreferences.Editor edit = mSharedPreference.edit();
-                           edit.putInt("isSql", 1);
-                           edit.commit();
-                        }*/
-                        new SyncDataThread().start();
+                        initStartupMenuData(mContext);
                     }
                     break;
             }
@@ -962,7 +954,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
         /**
          * Insert data /pkgName/label/date/num into
          * StartupMenu_database.db {@link StartupMenuSqliteOpenHelper}
-         * could Reusing in {@link StartupMenuInstallReceiver}
+         * could Reusing in {@link com.android.startupmenu.service.StartupMenuInstalledReceiver}
          */
         public void insertData(Cursor cursor, String pkgName, String appLabel,
                                               Date systemDate, int clickNumber) {
@@ -981,12 +973,6 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                            TableIndexDefine.COLUMN_PERPO_CLICK_NUM + ")" +
                            "values (?, ?, ?, ?)"  ,
                            new Object[] { appLabel, pkgName, systemDate, clickNumber} );
-            }
-        }
-
-        class SyncDataThread extends Thread {
-            public void run() {
-                initStartupMenuData(mContext);
             }
         }
 
