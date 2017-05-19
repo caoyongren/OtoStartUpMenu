@@ -238,28 +238,6 @@ public class StartMenuDialog extends Dialog implements OnTouchListener {
     private void addUsedNum() {
         String pkgName = StartupMenuActivity.mlistAppInfo.get(mPosition).getPkgName();
         StartupMenuUtil.updateDataStorage(mContext, pkgName);
-        /*
-        Cursor cursor = mdb.rawQuery("select * from " + TableIndexDefine.TABLE_APP_PERPO +
-                                     " where " + TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                                     new String[] { pkgName });
-        cursor.moveToNext();
-        //int numbers = cursor.getInt(cursor.getColumnIndex("int"));
-        //numbers++;
-        int number = cursor.getInt(cursor.getColumnIndex(TableIndexDefine.COLUMN_PERPO_CLICK_NUM));
-        number++;
-        ContentValues values = new ContentValues();
-        //values.put("int", numbers);
-        values.put(TableIndexDefine.COLUMN_PERPO_CLICK_NUM, number);
-        mdb.update(TableIndexDefine.TABLE_APP_PERPO, values,
-                   TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                   new String[] { pkgName });
-        SharedPreferences sharedPreference = mContext.getSharedPreferences("click",
-                                                             Context.MODE_PRIVATE);
-        Editor editor = sharedPreference.edit();
-        editor.clear();
-        editor.putBoolean("isClick", true);
-        editor.commit();
-        */
     }
 
     private boolean queryData(String str) {

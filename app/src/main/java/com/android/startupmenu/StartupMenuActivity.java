@@ -35,6 +35,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -245,7 +246,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             switch(what) {
                 case MotionEvent.ACTION_HOVER_ENTER:
                     if (!mIsClick) {
-                        initStartupMenuData(mContext);
+                        //initStartupMenuData(mContext);
                     }
                     break;
             }
@@ -962,6 +963,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
          */
         public void insertData(Cursor cursor, String pkgName, String appLabel,
                                               Date systemDate, int clickNumber) {
+            Log.i("Matther ", "insertDATA");
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     if (pkgName.equals(cursor.getString(cursor.getColumnIndex(
