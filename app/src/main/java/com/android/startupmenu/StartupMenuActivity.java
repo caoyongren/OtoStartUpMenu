@@ -77,7 +77,7 @@ import java.util.Map;
  * Annotation
  *
  * File name :  StartupMenuActivity
- * Author    :  Systemui group
+ * Author    :  Matthew
  * Date      :  2016-10-11
  *
  * Describe

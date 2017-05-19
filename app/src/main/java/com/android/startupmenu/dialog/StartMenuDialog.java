@@ -157,32 +157,6 @@ public class StartMenuDialog extends Dialog implements OnTouchListener {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
             StartupMenuAdapter.openAppBroadcast(mContext);
-            /*
-            Cursor c = mdb.rawQuery("select * from " + TableIndexDefine.TABLE_APP_PERPO +
-                                    " where " + TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ? ",
-                                                new String[] { mPkgName });
-            c.moveToNext();
-            //int numbers = c.getInt(c.getColumnIndex("int"));
-            //numbers++;
-            int number = c.getInt(c.getColumnIndex(TableIndexDefine.COLUMN_PERPO_CLICK_NUM));
-            number++;
-            ContentValues values = new ContentValues();
-            //values.put("int", numbers);
-            values.put(TableIndexDefine.COLUMN_PERPO_CLICK_NUM, number);
-            mdb.update(TableIndexDefine.TABLE_APP_PERPO, values,
-                       TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                       new String[] { mPkgName });
-            SharedPreferences sharedPreference = mContext.getSharedPreferences("click",
-                                                          Context.MODE_PRIVATE);
-            Editor editor = sharedPreference.edit();
-            String type = sharedPreference.getString("type", "sortName");
-            int order = sharedPreference.getInt("order", 0);
-            editor.clear();
-            editor.putBoolean("isClick", true);
-            editor.putString("type", type);
-            editor.putInt("order", order);
-            editor.commit();
-            */
             StartupMenuUtil.updateDataStorage(mContext, mPkgName);
             dialogDismiss();
             break;

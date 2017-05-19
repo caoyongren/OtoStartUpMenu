@@ -97,34 +97,6 @@ public class StartupMenuAdapter extends BaseAdapter {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                     openAppBroadcast(mContext);
-                    /*
-                    Cursor c = mdb.rawQuery("select * from " + TableIndexDefine.TABLE_APP_PERPO +
-                                            " where " + TableIndexDefine.COLUMN_PERPO_PKGNAME +
-                                            " = ? ", new String[] { pkgName });
-                    c.moveToNext();
-                    if (c.moveToFirst()) {
-                        int numbers = c.getInt(c.getColumnIndex(
-                                                 TableIndexDefine.COLUMN_PERPO_CLICK_NUM));
-                        numbers++;
-                        //int number = c.getInt(c.getColumnIndex("click"));
-                        //number++;
-                        ContentValues values = new ContentValues();
-                        values.put(TableIndexDefine.COLUMN_PERPO_CLICK_NUM, numbers);
-                        //values.put("click", number);
-                        mdb.update(TableIndexDefine.TABLE_APP_PERPO, values, TableIndexDefine.
-                                   COLUMN_PERPO_PKGNAME + " = ?", new String[] { pkgName });
-                        SharedPreferences sharedPreference = mContext.getSharedPreferences("click",
-                                                                             Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreference.edit();
-                        String type = sharedPreference.getString("type", "sortName");
-                        int order = sharedPreference.getInt("order", 0);
-                        editor.clear();
-                        editor.putBoolean("isClick", true);
-                        editor.putString("type", type);
-                        editor.putInt("order", order);
-                        //editor.putInt("isSql", 1);
-                        editor.commit();
-                    }*/
                     StartupMenuUtil.updateDataStorage(mContext, pkgName);
                     mStartupMenuActivity.killStartupMenu();
                     break;

@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -25,6 +23,7 @@ import com.android.startupmenu.StartupMenuActivity;
 import com.android.startupmenu.adapter.StartupMenuAdapter;
 import com.android.startupmenu.util.Constants;
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
+import com.android.startupmenu.util.StartupMenuUtil;
 import com.android.startupmenu.util.TableIndexDefine;
 
 public class StartMenuUsuallyDialog extends Dialog implements OnClickListener {
@@ -177,28 +176,8 @@ public class StartMenuUsuallyDialog extends Dialog implements OnClickListener {
 
     //Method of save used database
     private void addUsedNum() {
-        String pkgName = "";
-        pkgName = StartupMenuActivity.mlistViewAppInfo.get(mPosition).getPkgName();
-        Cursor cursor = mdb.rawQuery("select * from " + TableIndexDefine.TABLE_APP_PERPO  +
-                                     " where " + TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                                                 new String[] { pkgName });
-        cursor.moveToNext();
-        //int numbers = cursor.getInt(cursor.getColumnIndex("int"));
-        //numbers++;
-        int number = cursor.getInt(cursor.getColumnIndex(TableIndexDefine.COLUMN_PERPO_CLICK_NUM));
-        number++;
-        ContentValues values = new ContentValues();
-        //values.put("int", numbers);
-        values.put(TableIndexDefine.COLUMN_PERPO_CLICK_NUM, number);
-        mdb.update(TableIndexDefine.TABLE_APP_PERPO, values,
-                                    TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                                    new String[] { pkgName });
-        SharedPreferences sharedPreference = mContext.getSharedPreferences("click",
-                                                             Context.MODE_PRIVATE);
-        Editor editor = sharedPreference.edit();
-        editor.clear();
-        editor.putBoolean("isClickApp", true);
-        editor.commit();
+        String pkgName = StartupMenuActivity.mlistViewAppInfo.get(mPosition).getPkgName();
+        StartupMenuUtil.updateDataStorage(mContext, pkgName);
     }
 
     //Method of run pc mode
