@@ -51,6 +51,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.android.startupmenu.adapter.StartupMenuAdapter;
 import com.android.startupmenu.adapter.StartupMenuUsuallyAdapter;
@@ -111,8 +112,6 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
         private SQLiteDatabase mdb;
         BaseSettingDialog targetDialog;
 
-        //private boolean mListViewOpen = false;
-        private boolean mIsHasReayDb;
         private boolean mOnlyNameSort = false;
 
         private LinearLayout mSelectLayout;
@@ -404,6 +403,9 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             switch (v.getId()) {
             case R.id.openthos_file_manager:
                 /* start FileManager */
+                /**
+                 * used to openthos
+                 *
                 for (int i=0;i<mlistAppInfo.size();i++) {
                     AppInfo appInfo = mlistAppInfo.get(i);
                     PackageManager pm = this.getPackageManager();
@@ -414,6 +416,8 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                         startActivity(intent);
                     }
                 }
+                 */
+                openSystemFile();
                 break;
             case R.id.system_setting:
                 if (android.os.Build.VERSION.SDK_INT > 13) {
@@ -981,6 +985,24 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             super.onDestroy();
             if (mdb != null) {
                 mdb.close();
+            }
+        }
+
+        /**
+         * boot system fileManager ,
+         * replace openthos FM.
+         * */
+        public void openSystemFile(){
+            //系统调用Action属性
+            Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            //设置文件类型
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            // 添加Category属性
+            try{
+                startActivity(intent);
+            }catch(Exception e){
+                Toast.makeText(this, "没有正确打开文件管理器", Toast.LENGTH_LONG).show();
             }
         }
 
