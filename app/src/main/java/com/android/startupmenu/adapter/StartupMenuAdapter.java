@@ -22,10 +22,10 @@ import com.android.startupmenu.util.StartupMenuUtil;
 import java.util.List;
 import java.util.Map;
 
-public class StartupMenuAdapter extends BaseAdapter {
+public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListener{
     public static final int START_MENU_RIGHT_MOUSE_UI_NUMBER = 57;
+    public static final String TAG = "StartupMenu_DEBUG";
     public static String strPkgName;
-
     private List<AppInfo> mlistAppInfo = null;
     private Map<Integer,Boolean> isCheckedMap;
     LayoutInflater infater = null;
@@ -85,6 +85,12 @@ public class StartupMenuAdapter extends BaseAdapter {
         holder.appIcon.setImageDrawable(appInfo.getAppIcon());
         String appName = appInfo.getAppLabel();
         holder.tvAppLabel.setText(appInfo.limitNameLength(appName, mContext, appInfo));
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setClickItem(position, mlistAppInfo);
+            }
+        });
         view.setOnGenericMotionListener(new View.OnGenericMotionListener() {
             @Override
             public boolean onGenericMotion(View view, MotionEvent motionEvent) {
@@ -152,6 +158,11 @@ public class StartupMenuAdapter extends BaseAdapter {
                     , mStartMenuAppWidth, mStartMenuAppHeight);
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
+
     class ViewHolder {
         ImageView appIcon;
         TextView tvAppLabel;
@@ -166,5 +177,16 @@ public class StartupMenuAdapter extends BaseAdapter {
 
     public StartupMenuActivity getStartupMenuActivity() {
         return (StartupMenuActivity) mContext;
+    }
+
+    /**
+     * click item to open app.
+     * reused in {@StartupMenuUsuallyAdapter}
+     * */
+    public void setClickItem(int position, List<AppInfo> mlistAppInfo) {
+        String pkgName = StartupMenuActivity.mlistAppInfo.get(position).getPkgName();
+        Intent intent = StartupMenuActivity.mlistAppInfo.get(position).getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
     }
 }
