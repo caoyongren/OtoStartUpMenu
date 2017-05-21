@@ -74,7 +74,7 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
         View view = null;
         ViewHolder holder = null;
         if (convertview == null || convertview.getTag() == null) {
-            view = infater.inflate(R.layout.activity_gridview, null);
+            view = infater.inflate(R.layout.gridview_item, null);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {

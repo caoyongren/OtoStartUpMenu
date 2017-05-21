@@ -55,6 +55,7 @@
     <dimen name="startupmenu_layout_size_twenty_eight">28dp</dimen>
     <dimen name="startupmenu_layout_size_thirty_two">32dp</dimen>
     <dimen name="startupmenu_layout_size_forty">40dp</dimen>
+    <dimen name="startupmenu_layout_right_margin">180dp</dimen>
     <dimen name="startupmenu_layout_size_forty_eight">48dp</dimen>
     <dimen name="startupmenu_layout_size_fifty">50dp</dimen>
     <dimen name="startupmenu_layout_size_eighty_eight">88dp</dimen>

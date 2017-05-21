@@ -64,7 +64,7 @@ public class StartupMenuUsuallyAdapter extends BaseAdapter {
         View view = null;
         ViewHolder holder = null;
         if (convertview == null || convertview.getTag() == null) {
-            view = mInfater.inflate(R.layout.activity_listview_item, null);
+            view = mInfater.inflate(R.layout.listview_item, null);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {

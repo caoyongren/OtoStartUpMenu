@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * Created by Mingkai on 2016/6/22.
+ * Created by Matthew on 2016/6/22.
  */
 public class BaseSettingDialog extends Dialog {
     protected Context mContext;

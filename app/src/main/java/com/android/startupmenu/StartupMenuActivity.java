@@ -52,7 +52,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.android.startupmenu.adapter.StartupMenuAdapter;
 import com.android.startupmenu.adapter.StartupMenuUsuallyAdapter;
@@ -69,7 +68,6 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -153,7 +151,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
                                  WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
             getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
-            setContentView(R.layout.start_activity);
+            setContentView(R.layout.main_activity);
 
             mMsoh = new StartupMenuSqliteOpenHelper(StartupMenuActivity.this,
                                            "StartupMenu_database.db", null, 1);
@@ -166,7 +164,6 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             mBrowseAppAdapter = new StartupMenuAdapter(this, mlistAppInfo ,isCheckedMap);
             mStartMenuDialog = new StartMenuDialog(this, R.style.dialog);
             mStartMenuUsuallyDialog = new StartMenuUsuallyDialog(this, R.style.dialog);
-            //gv_view.setOnItemClickListener(this);
 
             gv_view = (GridView) findViewById(R.id.gv_view);
             mListView = (ListView) findViewById(R.id.lv_usually_view);
@@ -176,10 +173,10 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
             mTvSortShow = (TextView) findViewById(R.id.tv_sort_show);
             mEditText = (EditText) findViewById(R.id.et_text);
             LinearLayout lvArrowWhite = (LinearLayout) findViewById(R.id.iv_arrow_white);
-            LinearLayout ll = (LinearLayout) findViewById(R.id.ll_layout);
-            View openthosFileManager = (TextView) findViewById(R.id.openthos_file_manager);
-            TextView powerOff = (TextView) findViewById(R.id.power_off);
-            TextView systemSetting = (TextView) findViewById(R.id.system_setting);
+            LinearLayout ll = (LinearLayout) findViewById(R.id.main_ll_layout);
+            View openthosFileManager = (TextView) findViewById(R.id.main_textview_openthos_file_manager);
+            TextView powerOff = (TextView) findViewById(R.id.main_textview_power_off);
+            TextView systemSetting = (TextView) findViewById(R.id.main_textview_system_setting);
 
             openthosFileManager.setOnHoverListener(hoverListener);
             systemSetting.setOnHoverListener(hoverListener);
@@ -403,7 +400,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-            case R.id.openthos_file_manager:
+            case R.id.main_textview_openthos_file_manager:
                 /* start FileManager */
                 /**
                  * used to openthos
@@ -421,7 +418,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                  */
                 openSystemFile();
                 break;
-            case R.id.system_setting:
+            case R.id.main_textview_system_setting:
                 if (android.os.Build.VERSION.SDK_INT > 13) {
                     startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
@@ -832,7 +829,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
         public void onWindowFocusChanged(boolean hasFocus) {
             if (!hasFocus) {
                 if (!mFocus) {
-//                    finish();
+                //finish();
                 }
             }
             super.onWindowFocusChanged(hasFocus);
@@ -884,7 +881,7 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                *
                * ActivityManagerNative.callPowerSource(mContext);
                * finish();*/
-	}
+	    }
 
         public void killStartupMenu() {
               /**
@@ -1013,25 +1010,12 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
          * replace openthos FM.
          * */
         public void openSystemFile(){
-            //系统调用Action属性
             Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("*/*");
-            //设置文件类型
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            // 添加Category属性
             try{
                 startActivity(intent);
             }catch(Exception e){
-                Toast.makeText(this, "没有正确打开文件管理器", Toast.LENGTH_LONG).show();
             }
-        }
-
-        // used to test
-        public String refFormatNowDate() {
-            Calendar cal = Calendar.getInstance();
-            Date date = cal.getTime();
-            SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss:SSS");
-            String retStrFormatNowDate = sdFormatter.format(date);
-            return retStrFormatNowDate;
         }
 }
