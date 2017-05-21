@@ -88,9 +88,13 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setClickItem(position, mlistAppInfo);
+                mStartupMenuActivity.setClickItem(mContext,position, mlistAppInfo);
             }
         });
+        /**
+         * could use in openthos.
+         * but in monitor, can`t use;
+         *
         view.setOnGenericMotionListener(new View.OnGenericMotionListener() {
             @Override
             public boolean onGenericMotion(View view, MotionEvent motionEvent) {
@@ -124,6 +128,7 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
                 }
             });
         view.setOnHoverListener(hoverListener);
+        */
         return view;
     }
 
@@ -151,7 +156,6 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
     private void showMenuDialog1(int position,MotionEvent motionEvent){
         StartupMenuActivity.mStartMenuDialog.setPosition(position);
         int[] location = new int[2];
-        //((StartupMenuActivity)infater).mBackBtn.getLocationOnScreen(location);
         StartMenuDialog startMenuDialog = new StartMenuDialog(mContext, R.style.dialog);
         startMenuDialog.showDialog((int)motionEvent.getRawX() - location[0]
                     ,(int)motionEvent.getRawY() - location[1] + START_MENU_RIGHT_MOUSE_UI_NUMBER
@@ -166,12 +170,10 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
     class ViewHolder {
         ImageView appIcon;
         TextView tvAppLabel;
-      //TextView tvPkgName;
 
         public ViewHolder(View view) {
             this.appIcon = (ImageView) view.findViewById(R.id.package_image);
             this.tvAppLabel = (TextView) view.findViewById(R.id.package_name);
-        //  this.tvPkgName = (TextView) view.findViewById(R.id.tvPkgName);
         }
     }
 
@@ -183,10 +185,12 @@ public class StartupMenuAdapter extends BaseAdapter implements View.OnTouchListe
      * click item to open app.
      * reused in {@StartupMenuUsuallyAdapter}
      * */
-    public void setClickItem(int position, List<AppInfo> mlistAppInfo) {
+    public void setClickItem(Context mContext, int position, List<AppInfo> mlistAppInfo) {
         String pkgName = StartupMenuActivity.mlistAppInfo.get(position).getPkgName();
-        Intent intent = StartupMenuActivity.mlistAppInfo.get(position).getIntent();
+        StartupMenuUtil.updateDataStorage(mContext, pkgName);
+        Intent intent = mlistAppInfo.get(position).getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
+        mStartupMenuActivity.killStartupMenu();
     }
 }

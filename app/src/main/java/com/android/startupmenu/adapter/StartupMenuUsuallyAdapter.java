@@ -1,9 +1,6 @@
 package com.android.startupmenu.adapter;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,7 +14,6 @@ import com.android.startupmenu.R;
 import com.android.startupmenu.StartupMenuActivity;
 import com.android.startupmenu.util.AppInfo;
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
-import com.android.startupmenu.util.TableIndexDefine;
 
 import java.util.List;
 
@@ -32,6 +28,7 @@ public class StartupMenuUsuallyAdapter extends BaseAdapter {
     private StartupMenuSqliteOpenHelper mMsoh;
     private int mStartMenuCommonlWidth;
     private int mStartMenuCommonlHeight;
+    private StartupMenuActivity mStartupMenuActivity;
 
     public StartupMenuUsuallyAdapter(Context context, List<AppInfo> apps) {
         mInfater = (LayoutInflater) context
@@ -44,6 +41,7 @@ public class StartupMenuUsuallyAdapter extends BaseAdapter {
                                   .getDimensionPixelSize(R.dimen.start_menu_commonl_height);
         mMsoh = new StartupMenuSqliteOpenHelper(mContext, "StartupMenu_database.db", null, 1);
         mdb = mMsoh.getWritableDatabase();
+        mStartupMenuActivity = getStartupMenuActivity();
     }
 
     @Override
@@ -75,54 +73,48 @@ public class StartupMenuUsuallyAdapter extends BaseAdapter {
         }
         AppInfo appInfo = (AppInfo) getItem(position);
         holder.appIcon.setImageDrawable(appInfo.getAppIcon());
-        String appName = appInfo.getAppLabel();
+        final String appName = appInfo.getAppLabel();
         holder.tvAppLabel.setText(appInfo.limitNameLength(appName, mContext, appInfo));
-        view.setOnGenericMotionListener(new View.OnGenericMotionListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onGenericMotion(View view, MotionEvent motionEvent) {
-                int what = motionEvent.getButtonState();
-                StartupMenuActivity.setFocus(true);
-                switch (what) {
-                    case MotionEvent.BUTTON_PRIMARY:
-                        String pkgName = StartupMenuActivity.mlistViewAppInfo
-                                                            .get(position).getPkgName();
-                        Intent intent = StartupMenuActivity.mlistViewAppInfo
-                                                            .get(position).getIntent();
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                        StartupMenuAdapter.openAppBroadcast(mContext);
-                        Cursor c = mdb.rawQuery("select * from " + TableIndexDefine.TABLE_APP_PERPO
-                                       + " where " + TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                                                     new String[] { pkgName });
-                        c.moveToNext();
-                        int numbers = c.getInt(c.getColumnIndex(
-                                                     TableIndexDefine.COLUMN_PERPO_CLICK_NUM));
-                        numbers++;
-                        //int number = c.getInt(c.getColumnIndex("int"));
-                        //number++;
-                        ContentValues values = new ContentValues();
-                        values.put(TableIndexDefine.COLUMN_PERPO_CLICK_NUM, numbers);
-                        //values.put("click", number);
-                        mdb.update(TableIndexDefine.TABLE_APP_PERPO, values,
-                                   TableIndexDefine.COLUMN_PERPO_PKGNAME + " = ?",
-                                   new String[] { pkgName });
-                        break;
-                    case MotionEvent.BUTTON_TERTIARY:
-                        break;
-                    case MotionEvent.BUTTON_SECONDARY:
-                        if (position < 0 || position >= mlistViewAppInfo.size()) {
-                            return false;
-                        }
-                        showMenuDialog(position,motionEvent);
-                        break;
-                    default :
-                        StartupMenuActivity.setFocus(false);
-                        break;
-                }
-                return false;
+            public void onClick(View v) {
+                mStartupMenuActivity.setClickItem(mContext, position, mlistViewAppInfo);
             }
         });
-        view.setOnHoverListener(hoverListener);
+        /**
+         *
+         view.setOnGenericMotionListener(new View.OnGenericMotionListener() {
+        @Override
+        public boolean onGenericMotion(View view, MotionEvent motionEvent) {
+        int what = motionEvent.getButtonState();
+        StartupMenuActivity.setFocus(true);
+        switch (what) {
+        case MotionEvent.BUTTON_PRIMARY:
+        String pkgName = StartupMenuActivity.mlistViewAppInfo
+        .get(position).getPkgName();
+        Intent intent = StartupMenuActivity.mlistViewAppInfo
+        .get(position).getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+        StartupMenuAdapter.openAppBroadcast(mContext);
+        StartupMenuUtil.updateDataStorage(mContext, pkgName);
+        break;
+        case MotionEvent.BUTTON_TERTIARY:
+        break;
+        case MotionEvent.BUTTON_SECONDARY:
+        if (position < 0 || position >= mlistViewAppInfo.size()) {
+        return false;
+        }
+        showMenuDialog(position,motionEvent);
+        break;
+        default :
+        StartupMenuActivity.setFocus(false);
+        break;
+        }
+        return false;
+        }
+        });
+         view.setOnHoverListener(hoverListener);*/
         return view;
     }
 
@@ -154,13 +146,14 @@ public class StartupMenuUsuallyAdapter extends BaseAdapter {
     class ViewHolder {
         ImageView appIcon;
         TextView tvAppLabel;
-        //TextView tvPkgName;
 
         public ViewHolder(View view) {
             this.appIcon = (ImageView) view.findViewById(R.id.list_package_image);
             this.tvAppLabel = (TextView) view.findViewById(R.id.list_package_name);
-            // this.tvPkgName = (TextView) view.findViewById(R.id.tvPkgName);
         }
     }
 
+    public StartupMenuActivity getStartupMenuActivity() {
+        return (StartupMenuActivity) mContext;
+    }
 }

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
 import com.android.startupmenu.util.TableIndexDefine;
@@ -62,7 +61,6 @@ public class StartupMenuApplication extends Application {
      */
     public void insertData(Cursor cursor, String pkgName, String appLabel,
                            Date systemDate, int clickNumber) {
-        Log.i("Matthew", "insertDATA" + pkgName);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 if (pkgName.equals(cursor.getString(cursor.getColumnIndex(

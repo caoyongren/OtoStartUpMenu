@@ -62,6 +62,7 @@ import com.android.startupmenu.dialog.StartMenuUsuallyDialog;
 import com.android.startupmenu.util.AppInfo;
 import com.android.startupmenu.util.Constants;
 import com.android.startupmenu.util.StartupMenuSqliteOpenHelper;
+import com.android.startupmenu.util.StartupMenuUtil;
 import com.android.startupmenu.util.TableIndexDefine;
 
 import java.io.File;
@@ -202,9 +203,9 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
                     if (msg.what == 0) {
-                        mUsuallyAdapter = new StartupMenuUsuallyAdapter(StartupMenuActivity.this,
+                        /*mUsuallyAdapter = new StartupMenuUsuallyAdapter(StartupMenuActivity.this,
                                                                 mListViewEight);
-                        mListView.setAdapter(mUsuallyAdapter);
+                        mListView.setAdapter(mUsuallyAdapter);*/
                     } else if (msg.what == 1) {
                         selectAppShow();
                         queryCommonAppInfo();
@@ -552,7 +553,6 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
          * then show in left side listView.
          */
         public void queryCommonAppInfo() {
-           // if (mListViewOpen) {
                 mlistViewAppInfo = new ArrayList<AppInfo>();
                 Cursor cs = mdb.rawQuery("select distinct * from " + TableIndexDefine.
                                         TABLE_APP_PERPO, new String[] {});
@@ -605,10 +605,13 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
                     AppInfo appInfo = mlistViewAppInfo.get(i);
                     mListViewEight.add(appInfo);
                 }
-                Message m = new Message();
+                /*Message m = new Message();
                 m.what = 0;
-                mHandler.sendMessage(m);
-           // }
+                mHandler.sendMessage(m);*/
+                mUsuallyAdapter = new StartupMenuUsuallyAdapter(StartupMenuActivity.this,
+                    mListViewEight);
+                Log.i("Matthew: DEBUG", "mListViewEight" + mListViewEight);
+                mListView.setAdapter(mUsuallyAdapter);
         }
 
         private void nameSort() {
@@ -876,18 +879,34 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
         }
 
         public void powerOff(View v) {
-//            ActivityManagerNative.callPowerSource(mContext);
-//            finish();
+              /**
+               * used to Openthos!
+               *
+               * ActivityManagerNative.callPowerSource(mContext);
+               * finish();*/
 	}
 
         public void killStartupMenu() {
-//            try {
-//                ActivityManagerNative.getDefault().killStartupMenu();
-//                //System.exit(0);
-//                finish();
-//            } catch (RemoteException e) {
-//            }
+              /**
+               * used to openthos!
+               * try {
+                  ActivityManagerNative.getDefault().killStartupMenu();
+                  //System.exit(0);
+                  finish();
+              } catch (RemoteException e) {
+              }*/
+              finish();
         }
+
+    public void setClickItem(Context mContext, int position, List<AppInfo> mlistAppInfo) {
+        String pkgName = StartupMenuActivity.mlistAppInfo.get(position).getPkgName();
+        Log.i("Matthew", "pkgName" + pkgName);
+        StartupMenuUtil.updateDataStorage(mContext, pkgName);
+        Intent intent = mlistAppInfo.get(position).getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+        killStartupMenu();
+    }
 
         private void dismisTargetDialog(BaseSettingDialog newDialog){
             if(targetDialog != null) {
@@ -963,7 +982,6 @@ public class StartupMenuActivity extends Activity implements OnClickListener,
          */
         public void insertData(Cursor cursor, String pkgName, String appLabel,
                                               Date systemDate, int clickNumber) {
-            Log.i("Matther ", "insertDATA");
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     if (pkgName.equals(cursor.getString(cursor.getColumnIndex(
